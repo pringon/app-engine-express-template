@@ -1,0 +1,16 @@
+{
+  "name": "app-engine-ejs-template",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This is a Node.js fullstack template based off an express REST API and static front-end files templated with ejs.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
