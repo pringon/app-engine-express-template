@@ -1,0 +1,14 @@
+runtime: nodejs
+runtime_config:
+  operating_system: "ubuntu22"
+  runtime_version: "20"
+
+env: flex
+instance_class: F1
+
+env_variables:
+  FIREBASE_KEY: "<your-key>"
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 1
