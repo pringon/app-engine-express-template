@@ -10,7 +10,7 @@ export default async function makeApi(db) {
         res.json({ code: 200, message: "Hello World" })
     })
 
-    api.post("/suggestions", async(req, res) => {
+    api.post("/suggestions", async (req, res) => {
         if (!req.body.name || !req.body.suggestion) {
             return res.status(400).json({ code: 400, message: "Missing name or suggestion"})
         }
@@ -20,7 +20,7 @@ export default async function makeApi(db) {
         res.status(201).json({ code: 201, suggestionId: entity.id })
     })
     
-    api.get("/suggestions", async(req, res) => {
+    api.get("/suggestions", async (req, res) => {
         const q = query(suggestionModel, orderBy('name', 'asc'))
         const entities = await getDocs(q)
         const suggestions = entities.docs.map(doc => doc.data())
