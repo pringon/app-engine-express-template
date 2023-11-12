@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friendly Web App</title>
-    <link rel="stylesheet" href="style.css">
+    <title>App Engine Express Template</title>
+    <script src="https://cdn.tailwindcss.com" async></script>
 </head>
-<body>
-    <header>
-        <h1>App Engine Express Template</h1>
+<body class="font-sans bg-light-blue-100 text-gray-800 h-screen">
+    <header class="bg-light-blue-200 text-center py-2">
+        <h1 class="text-xl font-bold">App Engine Express Template</h1>
     </header>
-    <main>
-        <p>Your content goes here...</p>
-        <button id="action-button">Click Me!</button>
+    <main class="py-4 px-40">
+        <div class="grid mb-8 justify-items-center">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                <input type="text" id="form-name" name="name" class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label for="suggestion" class="block text-gray-700 text-sm font-bold mb-2">Suggestion</label>
+                <textarea id="form-suggestion" name="suggestion" rows="4" class="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+            </div>
+            <button type="submit" id="form-submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Submit
+            </button>
+        </div>
+        <table id="suggestions-table" class="table-auto w-3/4 mx-auto my-8 rounded-lg border-collapse text-center">
+            <tr class="border-b">
+                <th class="p-3">Name</th>
+                <th class="p-3">Suggestion</th>
+            </tr>
+        </table>
+        <button id="action-button" class="bg-light-green-200 text-white rounded-full py-2 px-4 float-right hover:bg-light-green-400 transition-colors">
+            Click Me!
+        </button>
     </main>
-    <footer>
+    <footer class="bg-light-blue-200 text-center py-2 fixed bottom-0 w-full">
         <p>© 2023 Urban Lab</p>
     </footer>
     <script src="script.js"></script>
