@@ -37,22 +37,22 @@ export default async function makeApi(db, upload) {
         if (!req.body.labels) {
             return res.status(400).json({ code: 400, message: "Please specify labels to match on" })
         }
+
         const wantedLabels = req.body.labels.split(",").map(label => label.trim().toLowerCase())
+
         const [result] = await visionClient.labelDetection(req.file.path)
-        console.log(result.labelAnnotations)
         const detectedLabels = result.labelAnnotations.map(label => ({
             ...label,
             description: label.description.trim().toLowerCase()
         }))
-        console.log(detectedLabels)
         if (!detectedLabels) {
             return res.status(500).json({ code: 500, message: "Could not process the image "})
         }
+
         const matchedLabels = wantedLabels
             .map(wantedLabel => {
                 let maxScore = 0
                 for (const label of detectedLabels) {
-                    console.log(label)
                     if (label.description.includes(wantedLabel)) {
                         maxScore = Math.max(maxScore, label.score)
                     }
