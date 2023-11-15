@@ -1,8 +1,11 @@
 import { Router } from "express";
 import { collection, addDoc, query, getDocs, orderBy } from 'firebase/firestore/lite';
+import vision from "@google-cloud/vision";
 
-export default async function makeApi(db) {
+
+export default async function makeApi(db, upload) {
     const suggestionModel = collection(db, 'suggestions');
+    const visionClient = new vision.ImageAnnotatorClient();
 
     const api = Router();
 
@@ -27,5 +30,38 @@ export default async function makeApi(db) {
         res.status(200).json({ code: 200, suggestions })
     })
 
-    return api;
+    api.post("/labels/upload", upload.single("image"), async (req, res) => {
+        if (!req.file) {
+            return res.status(400).json({ code: 400, message: "Missing image" })
+        }
+        if (!req.body.labels) {
+            return res.status(400).json({ code: 400, message: "Please specify labels to match on" })
+        }
+        const wantedLabels = req.body.labels.split(",").map(label => label.trim().toLowerCase())
+        const [result] = await visionClient.labelDetection(req.file.path)
+        console.log(result.labelAnnotations)
+        const detectedLabels = result.labelAnnotations.map(label => ({
+            ...label,
+            description: label.description.trim().toLowerCase()
+        }))
+        console.log(detectedLabels)
+        if (!detectedLabels) {
+            return res.status(500).json({ code: 500, message: "Could not process the image "})
+        }
+        const matchedLabels = wantedLabels
+            .map(wantedLabel => {
+                let maxScore = 0
+                for (const label of detectedLabels) {
+                    console.log(label)
+                    if (label.description.includes(wantedLabel)) {
+                        maxScore = Math.max(maxScore, label.score)
+                    }
+                }
+                return { label: wantedLabel, score: maxScore }
+            })
+            .filter(({ score }) => score > 0)
+        res.status(200).json({ code: 200, matchedLabels })
+    })
+
+    return api
 }
