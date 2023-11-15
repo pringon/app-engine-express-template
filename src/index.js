@@ -5,6 +5,7 @@ import { getFirestore } from 'firebase/firestore/lite'
 import multer from "multer"
 
 import makeApi from "./api.js"
+import { fileDeleter } from "./fs.js";
 
 import path from "node:path"
 import os from "node:os"
@@ -25,6 +26,7 @@ const db = getFirestore(firebase)
 
 /**
  * FILE UPLOAD MIDDLEWARE SETUP
+ * XXX: Does not currently delete files from disk, if this becomes a bottleneck consider adding a middleware
  */
 const FILES_TEMP_FOLDER = path.join(os.tmpdir(), "/app-engine-express-temple-files")
 const upload = multer({ dest: FILES_TEMP_FOLDER });
