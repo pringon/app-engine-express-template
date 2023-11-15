@@ -30,13 +30,19 @@
                 <th class="p-3">Suggestion</th>
             </tr>
         </table>
-        <button id="action-button" class="bg-light-green-200 text-white rounded-full py-2 px-4 float-right hover:bg-light-green-400 transition-colors">
-            Click Me!
-        </button>
+        <div class="flex justify-center items-center">
+            <input type="file" id="fileInput" class="mb-4">
+            <button id="uploadButton" class="bg-green-300 hover:bg-green-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Upload
+            </button>
+        </div>
+        <table id="image-results-table" class="table-auto w-3/4 mx-auto rounded-lg border-collapse text-center">
+            <tr class="border-b">
+                <th class="p-3">Label</th>
+                <th class="p-3">Score</th>
+            </tr>
+        </table>
     </main>
-    <footer class="bg-light-blue-200 text-center py-2 fixed bottom-0 w-full">
-        <p>© 2023 Urban Lab</p>
-    </footer>
     <script src="script.js"></script>
 </body>
 </html>

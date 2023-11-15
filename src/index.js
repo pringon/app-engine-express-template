@@ -5,7 +5,6 @@ import { getFirestore } from 'firebase/firestore/lite'
 import multer from "multer"
 
 import makeApi from "./api.js"
-import { fileDeleter } from "./fs.js";
 
 import path from "node:path"
 import os from "node:os"
