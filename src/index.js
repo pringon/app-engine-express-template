@@ -17,8 +17,8 @@ const db = getDatabase(process.env.FIREBASE_KEY)
  * FILE UPLOAD MIDDLEWARE SETUP
  * XXX: Does not currently delete files from disk, if this becomes a bottleneck consider adding a middleware
  */
-const FILES_TEMP_FOLDER = path.join(os.tmpdir(), "/app-engine-express-temple-files")
-const upload = multer({ dest: FILES_TEMP_FOLDER });
+const FILES_TEMP_FOLDER = path.join(os.tmpdir(), "/app-engine-express-template-files")
+const upload = multer({ dest: FILES_TEMP_FOLDER })
 
 const app = express()
 const api = await makeApi(db, upload)
