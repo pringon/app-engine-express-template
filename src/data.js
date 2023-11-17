@@ -17,6 +17,8 @@ export function getDatabase(firebaseKey) {
     }
     const firebase = initializeApp(firebaseConfig)
     const db = getFirestore(firebase)
-    db.backend = "firebase"
-    return db
+    return {
+        backend: "firebase",
+        driver: db,
+    }
 }

@@ -9,7 +9,7 @@ export function getModel(db) {
     } else if (db.backend === "firebase") {
         return {
             backend: "firebase",
-            driver: collection(db, 'suggestions')
+            driver: collection(db.driver, 'suggestions')
         }
     }
 }
