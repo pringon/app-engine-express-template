@@ -131,3 +131,6 @@ dist
 
 # Google App Engine
 app.yaml
+
+# MacOS
+.DS_Store

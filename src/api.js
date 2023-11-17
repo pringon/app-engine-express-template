@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { collection, addDoc, query, getDocs, orderBy } from 'firebase/firestore/lite';
 import vision from "@google-cloud/vision";
+
+import * as suggestionF from "./models/suggestion.js"
 
 
 export default async function makeApi(db, upload) {
-    const suggestionModel = collection(db, 'suggestions');
+    const suggestionModel = suggestionF.getModel(db)
     const visionClient = new vision.ImageAnnotatorClient();
 
     const api = Router();
@@ -19,14 +20,12 @@ export default async function makeApi(db, upload) {
         }
         const { name, suggestion } = req.body
         
-        const entity = await addDoc(suggestionModel, { name, suggestion })
+        const entity = await suggestionF.addSuggestion(suggestionModel, { name, suggestion })
         res.status(201).json({ code: 201, suggestionId: entity.id })
     })
     
     api.get("/suggestions", async (req, res) => {
-        const q = query(suggestionModel, orderBy('name', 'asc'))
-        const entities = await getDocs(q)
-        const suggestions = entities.docs.map(doc => doc.data())
+        const suggestions = await suggestionF.getSuggestions(suggestionModel)
         res.status(200).json({ code: 200, suggestions })
     })
 
