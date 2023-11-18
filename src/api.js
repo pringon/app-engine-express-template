@@ -1,11 +1,11 @@
 import { Router } from "express";
 import vision from "@google-cloud/vision";
 
-import * as suggestionF from "./models/suggestion.js"
+import { makeModel } from "./models/suggestion.js"
 
 
 export default async function makeApi(db, upload) {
-    const suggestionModel = suggestionF.getModel(db)
+    const suggestionModel = makeModel(db)
     const visionClient = new vision.ImageAnnotatorClient();
 
     const api = Router();
@@ -20,12 +20,12 @@ export default async function makeApi(db, upload) {
         }
         const { name, suggestion } = req.body
         
-        const entity = await suggestionF.addSuggestion(suggestionModel, { name, suggestion })
+        const entity = await suggestionModel.methods.addSuggestion({ name, suggestion })
         res.status(201).json({ code: 201, suggestionId: entity.id })
     })
     
     api.get("/suggestions", async (req, res) => {
-        const suggestions = await suggestionF.getSuggestions(suggestionModel)
+        const suggestions = await suggestionModel.methods.getSuggestions()
         res.status(200).json({ code: 200, suggestions })
     })
 
