@@ -3,7 +3,7 @@ import { addDoc, collection, query, getDocs, orderBy } from 'firebase/firestore/
 export function makeModel(db) {
     const model = initBackend(db)
     model.methods = makeMethods(model)
-    return model
+    return Object.freeze(model)
 }
 
 function initBackend(db) {
